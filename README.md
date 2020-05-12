@@ -16,13 +16,13 @@ Her gün belirlenen saatte `stored procedure` çalıştıran windows servis
 },
 ```
 
-- Çalıştıracağınız saati ve sp name alanını düzenleyin.
+- Çalıştıracağınız cronu ve sp name alanını düzenleyin. Cron ile ilgili detaylı bilgi için [https://crontab.guru](tıklayınız.)
 
 ```json
 ...
 "JobSettings": {
     "StoredProcedureName": "uspExample",
-    "RunTime": "12:30:00"
+    "Cron": "* * * * *"
 },
 ```
 
