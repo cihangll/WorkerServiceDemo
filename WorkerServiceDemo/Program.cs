@@ -1,8 +1,9 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
+using WorkerServiceDemo.Concrete;
+using WorkerServiceDemo.Extensions;
 
 namespace WorkerServiceDemo
 {
@@ -46,7 +47,21 @@ namespace WorkerServiceDemo
 				.UseWindowsService()
 				.ConfigureServices((hostContext, services) =>
 				{
-					services.AddHostedService<StoredProcedureWorker>();
+					//Every hour, for more information: https://crontab.guru/
+					const string defaultCron = "0 * * * *";
+					var cronExpression = hostContext.Configuration.GetSection("JobSettings:Cron")?.Value ?? defaultCron;
+
+					services.AddCronJob<StoredProcedureWorker>(options =>
+					{
+						options.CronExpression = cronExpression;
+						options.TimeZoneInfo = TimeZoneInfo.Local;
+					});
+
+					services.AddCronJob<HelloWorldWorker>(options =>
+					{
+						options.CronExpression = cronExpression;
+						options.TimeZoneInfo = TimeZoneInfo.Local;
+					});
 				})
 				.UseSerilog();
 		}
