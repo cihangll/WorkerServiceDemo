@@ -1,0 +1,9 @@
+﻿global using Cronos;
+global using Dapper;
+global using Serilog;
+global using System.Data;
+global using System.Data.SqlClient;
+global using WorkerServiceNet6.Config;
+global using WorkerServiceNet6.Extensions;
+global using WorkerServiceNet6.Workers;
+global using WorkerServiceNet6.Workers.Abstract;

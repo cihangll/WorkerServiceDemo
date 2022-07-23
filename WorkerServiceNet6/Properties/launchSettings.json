@@ -1,7 +1,8 @@
 ﻿{
   "profiles": {
-    "WorkerServiceDemo": {
+    "WorkerServiceNet6": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }
