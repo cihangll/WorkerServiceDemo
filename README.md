@@ -165,13 +165,13 @@ sc.exe start WorkerServiceDemo
 
 ![image](https://user-images.githubusercontent.com/6229029/180613786-b461050c-b17c-43d3-9d50-5150981553ec.png)
 
-Servisi durdurmak için;
+- Servisi durdurmak için;
 
 ```pwsh
 sc.exe stop WorkerServiceDemo
 ```
 
-Servisi kaldırmak için;
+- Servisi kaldırmak için;
 
 ```pwsh
 sc.exe stop WorkerServiceDemo
