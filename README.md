@@ -37,7 +37,7 @@ Projeyi bu haliyle çalıştırmak için aşağıda belirtilen adımları uygula
 
 #### Worker Servis Oluşturma ve Kullanma
 
-Örneğin `DemoWorkerService` adında yeni bir worker servis oluşturmak istediğimiz varsayalım. 
+Örneğin `DemoWorkerService` adında yeni bir worker servis oluşturmak istediğimizi varsayalım. 
 
 Servisin `CronJobService<T>` sınıfından türetilmesi gerekiyor. Dependency injection ile `CronJobService` sınıfına `IScheduleConfig` ve `ILogger` nesnelerinin gönderilmesi gerekli.
 
@@ -61,13 +61,13 @@ public class DemoWorkerService : CronJobService<DemoWorkerService>
 }
 ```
 
-DoWorkAsync metodunu ihtiyacınıza göre doldurun.
+`DoWorkAsync` metodunu ihtiyacınıza göre doldurun.
 
 ```csharp
 public override async Task DoWorkAsync(CancellationToken cancellationToken)
 {
   //API call or something
-  await Task.Delay(5000, cancellationToken);
+  await Task.Delay(3000, cancellationToken);
 
   // Do stuff...
 }
