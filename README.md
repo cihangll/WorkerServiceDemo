@@ -37,6 +37,88 @@ Projeyi bu haliyle çalıştırmak için aşağıda belirtilen adımları uygula
 
 #### Worker Servis Oluşturma ve Kullanma
 
+Örneğin `DemoWorkerService` adında yeni bir worker servis oluşturmak istediğimiz varsayalım. 
+
+Servisin `CronJobService<T>` sınıfından türetilmesi gerekiyor. Dependency injection ile `CronJobService` sınıfına `IScheduleConfig` ve `ILogger` nesnelerinin gönderilmesi gerekli.
+
+```csharp
+public class DemoWorkerService : CronJobService<DemoWorkerService>
+{
+	private readonly ILogger<DemoWorkerService> _logger;
+
+	public DemoWorkerService(
+		IScheduleConfig<DemoWorkerService> config,
+		ILogger<DemoWorkerService> logger
+	) : base(config, logger)
+	{
+		_logger = logger;
+	}
+
+	public override Task DoWorkAsync(CancellationToken cancellationToken)
+	{
+		throw new NotImplementedException();
+	}
+}
+```
+
+DoWorkAsync metodunu ihtiyacınıza göre doldurun.
+
+```csharp
+public override async Task DoWorkAsync(CancellationToken cancellationToken)
+{
+  //API call or something
+  await Task.Delay(5000, cancellationToken);
+
+  // Do stuff...
+}
+```
+
+Son hali şu şekilde gözükecektir. 
+
+```csharp
+namespace WorkerServiceDemo.Workers;
+
+public class DemoWorkerService : CronJobService<DemoWorkerService>
+{
+	private readonly ILogger<DemoWorkerService> _logger;
+
+	public DemoWorkerService(
+		IScheduleConfig<DemoWorkerService> config,
+		ILogger<DemoWorkerService> logger
+	) : base(config, logger)
+	{
+		_logger = logger;
+	}
+
+	public override async Task DoWorkAsync(CancellationToken cancellationToken)
+	{
+		//API call or something
+		await Task.Delay(5000, cancellationToken);
+
+		// Do stuff...
+	}
+}
+```
+
+Worker servis olarak çalışabilmesi için `Program.cs` içerisinde kayıt işlemi yapmamız gerekli. Bunun için `AddCronJob<T>` adındaki extension'ı kullanabiliriz.
+
+```csharp
+var host = Host.CreateDefaultBuilder(args)
+.ConfigureServices((hostContext, services) =>
+{
+//...
+
+  services.AddCronJob<DemoWorkerService>(options =>
+  {
+    options.CronExpression = "0 * * * *"; //run every hour
+    options.TimeZoneInfo = TimeZoneInfo.Local;
+  });
+
+})
+...
+```
+
+Bu kadar kolay. Artık belirtmiş olduğunuz cron expression'a göre belirlediğiniz zaman aralıklarında `DoWorkAsync` metodu içerisine yazdıklarınız sorunsuz çalışacaktır. 
 
 #### Windows Servis Olarak Kurulum
 
