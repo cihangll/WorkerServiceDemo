@@ -1,34 +1,34 @@
-[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/cihangll/WorkerServiceDemo/blob/master/README.en.md)
-[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/cihangll/WorkerServiceDemo/blob/master/README.md)
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/cihangll/WorkerServiceDemo/blob/master/README.md)
+[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/cihangll/WorkerServiceDemo/blob/master/README.tr.md)
 
 ## WorkerServiceDemo
 
-It is a windows service project that runs at specified times.
+Belirlenen zamanlarda çalışan windows servis projesidir.
 
-#### Used
+#### Kullanılanlar
 - [Worker Services](https://docs.microsoft.com/en-us/dotnet/core/extensions/workers) - `for worker service`
 - [CronJob](https://github.com/HangfireIO/Cronos) - `for Cron Expression`
 - [Serilog](https://serilog.net/) - `for Logging`
 - [Dapper](https://github.com/DapperLib/Dapper) - `for Execute Stored Procedures`
 
-It includes 3 sample worker services.
+İçerisinde 3 adet örnek worker servis yer almaktadır.
 
-- "Hello World!" service.
-- Service running every second.
-- Service running the stored procedure as an example.
+- Console 'a "Hello World!" yazan servis.
+- Her saniye çalışan servis.
+- Örnek olması açısından stored procedure çalıştıran servis.
 
-#### Running the Project
+#### Projeyi Çalıştırmak
 
-Follow the steps given below to run the project.
+Projeyi bu haliyle çalıştırmak için aşağıda belirtilen adımları uygulayın.
 
-- `appsettings.json` change the _ConnectionStrings_ part in the file.
+- `appsettings.json` dosyası içerisindeki _connection string_ kısmını uygun hale getirin.
 ```json
 "ConnectionStrings": {
   "Default": "Server=SERVER;Database=DATABASE;User Id=USERNAME;Password=PASSWORD;MultipleActiveResultSets=true"
 },
 ```
 
-- Edit the cron and the sp name field. For detailed information about cron [click here.](https://crontab.guru)
+- Çalıştıracağınız cronu ve sp name alanını düzenleyin. Cron ile ilgili detaylı bilgi için [tıklayınız.](https://crontab.guru)
 
 ```json
 ...
@@ -38,11 +38,11 @@ Follow the steps given below to run the project.
 },
 ```
 
-#### Creating and Using Worker Service
+#### Worker Servis Oluşturma ve Kullanma
 
-For example, let's assume we want to create a new worker service named `DemoWorkerService`.
+Örneğin `DemoWorkerService` adında yeni bir worker servis oluşturmak istediğimizi varsayalım. 
 
-The service needs to be extend from the `CronJobService<T>` class. We need to send `IScheduleConfig` and `ILogger` objects to `CronJobService` class with dependency injection.
+Servisin `CronJobService<T>` sınıfından türetilmesi gerekiyor. Dependency injection ile `CronJobService` sınıfına `IScheduleConfig` ve `ILogger` nesnelerinin gönderilmesi gerekli.
 
 ```csharp
 public class DemoWorkerService : CronJobService<DemoWorkerService>
@@ -64,7 +64,7 @@ public class DemoWorkerService : CronJobService<DemoWorkerService>
 }
 ```
 
-Fill the `DoWorkAsync` method according to your need.
+`DoWorkAsync` metodunu ihtiyacınıza göre doldurun.
 
 ```csharp
 public override async Task DoWorkAsync(CancellationToken cancellationToken)
@@ -76,7 +76,7 @@ public override async Task DoWorkAsync(CancellationToken cancellationToken)
 }
 ```
 
-The final version will look like this.
+Son hali şu şekilde gözükecektir. 
 
 ```csharp
 namespace WorkerServiceDemo.Workers;
@@ -103,7 +103,7 @@ public class DemoWorkerService : CronJobService<DemoWorkerService>
 }
 ```
 
-In order for the `DemoWorkerService` to work as a service, we need to register in `Program.cs`. We can use the extension named `AddCronJob<T>` for this.
+Worker servis olarak çalışabilmesi için `Program.cs` içerisinde kayıt işlemi yapmamız gerekli. Bunun için `AddCronJob<T>` adındaki extension'ı kullanabiliriz.
 
 ```csharp
 var host = Host.CreateDefaultBuilder(args)
@@ -121,13 +121,13 @@ var host = Host.CreateDefaultBuilder(args)
 ...
 ```
 
-It's that easy. Now, what you write in the `DoWorkAsync` method will run smoothly at the time intervals you have determined according to the cron expression you have specified.
+Bu kadar kolay. Artık belirtmiş olduğunuz cron expression'a göre belirlediğiniz zaman aralıklarında `DoWorkAsync` metodu içerisine yazdıklarınız sorunsuz çalışacaktır. 
 
-#### Installing as a Windows Service
+#### Windows Servis Olarak Kurulum
 
-As an example, let's install the windows service installation in the `WorkerServiceDemo` folder under the `C:\\` directory.
+Örnek olması adına windows servis kurulumunu `C:\\` dizini altında `WorkerServiceDemo` klasörüne yükleyelim.
 
-- Open the `appsettings.json` file. Specify `C:\\WorkerServiceDemo` directory for logging.
+- `appsettings.json` dosyasını açın. Windows servis olarak kurulum yapacağınız dizin neresiyse loglama için de o dizini belirtin.
 
 ```json
 ...
@@ -135,19 +135,19 @@ As an example, let's install the windows service installation in the `WorkerServ
 ...
 ```
 
-- You can set Publish config as follows.
+- Publish için aşağıdaki gibi düzenleme yapabilirsiniz.
 
 ![image](https://user-images.githubusercontent.com/6229029/180613576-a285904b-1140-456e-8cce-d86a4627d532.png)
 
-- After compiling the project, click `Publish` button and extract it to the relevant folder. (Ex: `C:\Users\demo\Desktop\WorkerServiceDemo\WorkerServiceNet6\bin\Release\net6.0\win-x64\publish`)
+- Projeyi derledikten sonra `Publish` diyerek ilgili klasöre çıkartın. (Örn; `C:\Users\demo\Desktop\WorkerServiceDemo\WorkerServiceNet6\bin\Release\net6.0\win-x64\publish`)
 
 ![image](https://user-images.githubusercontent.com/6229029/180613602-99fe56a2-62e3-43cd-bf20-ffae01815305.png)
 
-- Move the files in the `publish` folder to the folder where you will install.(Ex; C:\WorkerServiceDemo\)
+- Kurulumu yapacağınız klasöre `publish` klasöründeki dosyaları taşıyın. (Örn; C:\WorkerServiceDemo\)
 
 ![image](https://user-images.githubusercontent.com/6229029/180613661-cb6248b5-21c6-4410-b294-cdfbcfe6907c.png)
 
-- Run Powershell as administrator and execute command below for install a windows service.
+- Powershell'i yönetici olarak çalıştırıp aşağıdaki gibi kurulum yapın.
 
 ```pwsh
 sc.exe create WorkerServiceDemo binpath=C:\WorkerServiceDemo\WorkerServiceDemo.exe start=auto
@@ -155,7 +155,7 @@ sc.exe create WorkerServiceDemo binpath=C:\WorkerServiceDemo\WorkerServiceDemo.e
 
 ![image](https://user-images.githubusercontent.com/6229029/180613692-48aa3e1b-15ae-4e89-ba5d-828a8ce17de1.png)
 
-- To start the service;
+- Servisi başlatmak için;
 
 ```pwsh
 sc.exe start WorkerServiceDemo
@@ -165,13 +165,13 @@ sc.exe start WorkerServiceDemo
 
 ![image](https://user-images.githubusercontent.com/6229029/180613786-b461050c-b17c-43d3-9d50-5150981553ec.png)
 
-- To stop the service;
+- Servisi durdurmak için;
 
 ```pwsh
 sc.exe stop WorkerServiceDemo
 ```
 
-- To delete the service;
+- Servisi kaldırmak için;
 
 ```pwsh
 sc.exe stop WorkerServiceDemo
@@ -180,4 +180,4 @@ sc.exe delete WorkerServiceDemo
 
 ![image](https://user-images.githubusercontent.com/6229029/180613809-b3229471-9ae5-4a7f-9ccf-c80398a1f7f4.png)
 
-For more information, you can visit [windows-service page](https://docs.microsoft.com/en-us/dotnet/core/extensions/windows-service).
+Daha fazla bilgi için [adresini](https://docs.microsoft.com/en-us/dotnet/core/extensions/windows-service) ziyaret edebilirsiniz.
