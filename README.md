@@ -1,3 +1,6 @@
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/cihangll/WorkerServiceDemo/edit/master/README.en.md)
+[![tr](https://img.shields.io/badge/lang-tr-red.svg)](https://github.com/cihangll/WorkerServiceDemo/edit/master/README.md)
+
 ## WorkerServiceDemo
 
 Belirlenen zamanlarda çalışan windows servis projesidir.
