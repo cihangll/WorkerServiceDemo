@@ -1,11 +1,16 @@
 ## WorkerServiceDemo
 
-Her gün belirlenen saatte `stored procedure` çalıştıran windows servis
+Belirlenen zamanlarda çalışan windows servis projesi. İçerisinde 3 adet örnek worker servis yer almaktadır.
+
+- Console 'a "Hello World!" yazan servis.
+- Her saniye çalışan servis.
+- Örnek olması açısından stored procedure çalıştıran servis.
 
 #### Kullanılanlar
-- Serilog
-- Dapper
-- Worker Service
+- [Worker Services](https://docs.microsoft.com/en-us/dotnet/core/extensions/workers) - `for worker service`
+- [CronJob](https://github.com/HangfireIO/Cronos) - `for Cron Expression`
+- [Serilog](https://serilog.net/) - `for Logging`
+- [Dapper](https://github.com/DapperLib/Dapper) - `for Execute Stored Procedures`
 
 #### Kurulum
 
