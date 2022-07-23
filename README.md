@@ -40,7 +40,7 @@ Projeyi bu haliyle çalıştırmak için aşağıda belirtilen adımları uygula
 
 #### Windows Servis Olarak Kurulum
 
-Örnek olması adına windows servis kurulumunu `C:\\` dizini altında `WorkerServiceDemo` klasörüne yükleyeceğiz.
+Örnek olması adına windows servis kurulumunu `C:\\` dizini altında `WorkerServiceDemo` klasörüne yükleyelim.
 
 - `appsettings.json` dosyasını açın. Windows servis olarak kurulum yapacağınız dizin neresiyse loglama için de o dizini belirtin.
 
@@ -50,23 +50,40 @@ Projeyi bu haliyle çalıştırmak için aşağıda belirtilen adımları uygula
 ...
 ```
 
+- Publish için aşağıdaki gibi düzenleme yapabilirsiniz.
+
+![image](https://user-images.githubusercontent.com/6229029/180613576-a285904b-1140-456e-8cce-d86a4627d532.png)
+
 - Projeyi derledikten sonra `Publish` diyerek ilgili klasöre çıkartın. (Örn; `C:\Users\demo\Desktop\WorkerServiceDemo\WorkerServiceNet6\bin\Release\net6.0\win-x64\publish`)
+
+![image](https://user-images.githubusercontent.com/6229029/180613602-99fe56a2-62e3-43cd-bf20-ffae01815305.png)
 
 - Kurulumu yapacağınız klasöre `publish` klasöründeki dosyaları taşıyın. (Örn; C:\WorkerServiceDemo\)
 
-![image](https://user-images.githubusercontent.com/6229029/180612076-d72b812d-7890-4d57-bd3f-abd71b1e3d9c.png)
+![image](https://user-images.githubusercontent.com/6229029/180613661-cb6248b5-21c6-4410-b294-cdfbcfe6907c.png)
 
-- Komut satırını yönetici olarak çalıştırıp aşağıdaki gibi kurulum yapın.
+- Powershell'i yönetici olarak çalıştırıp aşağıdaki gibi kurulum yapın.
 
 ```pwsh
-sc.exe create WorkerServiceDemo binpath=C:\WorkerServiceDemo\WorkerServiceNet6.exe start=auto
+sc.exe create WorkerServiceDemo binpath=C:\WorkerServiceDemo\WorkerServiceDemo.exe start=auto
 ```
-![image](https://user-images.githubusercontent.com/6229029/180612106-02000dac-0216-40ce-baa8-71d9cba305a9.png)
+
+![image](https://user-images.githubusercontent.com/6229029/180613692-48aa3e1b-15ae-4e89-ba5d-828a8ce17de1.png)
 
 - Servisi başlatmak için;
 
 ```pwsh
 sc.exe start WorkerServiceDemo
+```
+
+![image](https://user-images.githubusercontent.com/6229029/180613718-6a1ba34a-d2ce-4f47-babc-6d87dad6d56d.png)
+
+![image](https://user-images.githubusercontent.com/6229029/180613786-b461050c-b17c-43d3-9d50-5150981553ec.png)
+
+Servisi durdurmak için;
+
+```pwsh
+sc.exe stop WorkerServiceDemo
 ```
 
 Servisi kaldırmak için;
@@ -76,3 +93,6 @@ sc.exe stop WorkerServiceDemo
 sc.exe delete WorkerServiceDemo
 ```
 
+![image](https://user-images.githubusercontent.com/6229029/180613809-b3229471-9ae5-4a7f-9ccf-c80398a1f7f4.png)
+
+Daha fazla bilgi için [adresini](https://docs.microsoft.com/en-us/dotnet/core/extensions/windows-service) ziyaret edebilirsiniz.
